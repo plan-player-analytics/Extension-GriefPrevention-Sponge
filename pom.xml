@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.djrapitops</groupId>
-    <artifactId>Extension-GriefPrevention</artifactId>
-    <version>16.11.6-R0.1</version>
+    <artifactId>Extension-GriefPrevention-Sponge</artifactId>
+    <version>4.0.1-R0.1</version>
     <build>
         <plugins>
             <plugin>
@@ -27,25 +27,19 @@
         </repository>
 
         <repository>
-            <id>vault-repo</id> <!-- Essentials build repository since Vault repo goes down often. -->
-            <url>https://ci.ender.zone/plugin/repository/everything/</url>
+            <id>Forge</id>
+            <url>http://files.minecraftforge.net/maven</url>
         </repository>
-
-        <repository>
-            <id>jitpack.io</id> <!-- GriefPrevention repo -->
-            <url>https://jitpack.io</url>
-        </repository>
-
         <!-- Platforms -->
 
+        <!--        <repository>-->
+        <!--            <id>spigot-repo</id>-->
+        <!--            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>-->
+        <!--        </repository>-->
         <repository>
-            <id>spigot-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+            <id>sponge-repo</id>
+            <url>https://repo.spongepowered.org/maven</url>
         </repository>
-        <!--<repository>-->
-        <!--<id>sponge-repo</id>-->
-        <!--<url>https://repo.spongepowered.org/maven</url>-->
-        <!--</repository>-->
         <!--<repository>-->
         <!--<id>bungeecord-repo</id>-->
         <!--<url>https://oss.sonatype.org/content/repositories/snapshots</url>-->
@@ -66,26 +60,26 @@
 
         <!-- Plugin API Dependency -->
         <dependency>
-            <groupId>com.github.TechFortress</groupId>
-            <artifactId>GriefPrevention</artifactId>
-            <version>16.11.6</version>
+            <groupId>me.ryanhamshire</groupId>
+            <artifactId>griefprevention</artifactId>
+            <version>1.10.2-4.0.1.451</version>
             <scope>provided</scope>
         </dependency>
 
         <!-- Platforms -->
 
+        <!--        <dependency>-->
+        <!--            <groupId>org.spigotmc</groupId>-->
+        <!--            <artifactId>spigot-api</artifactId>-->
+        <!--            <version>1.12.2-R0.1-SNAPSHOT</version>-->
+        <!--            <scope>provided</scope>-->
+        <!--        </dependency>-->
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>1.12.2-R0.1-SNAPSHOT</version>
+            <groupId>org.spongepowered</groupId>
+            <artifactId>spongeapi</artifactId>
+            <version>7.1.0</version>
             <scope>provided</scope>
         </dependency>
-        <!--<dependency>-->
-        <!--<groupId>org.spongepowered</groupId>-->
-        <!--<artifactId>spongeapi</artifactId>-->
-        <!--<version>7.1.0</version>-->
-        <!--<scope>provided</scope>-->
-        <!--</dependency>-->
         <!--<dependency>-->
         <!--<groupId>net.md-5</groupId>-->
         <!--<artifactId>bungeecord-api</artifactId>-->
@@ -123,7 +117,7 @@
         <repository>
             <id>bintray-rsl1122-Plan-repository</id>
             <name>rsl1122-Plan-repository</name>
-            <url>https://api.bintray.com/maven/rsl1122/Plan-repository/Extension-GriefPrevention/;publish=1</url>
+            <url>https://api.bintray.com/maven/rsl1122/Plan-repository/Extension-GriefPrevention-Sponge/;publish=1</url>
         </repository>
     </distributionManagement>
 </project>

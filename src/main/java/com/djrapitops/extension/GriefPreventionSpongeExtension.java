@@ -30,16 +30,14 @@ import com.djrapitops.plan.extension.icon.Color;
 import com.djrapitops.plan.extension.icon.Family;
 import com.djrapitops.plan.extension.icon.Icon;
 import com.djrapitops.plan.extension.table.Table;
-import me.ryanhamshire.GriefPrevention.Claim;
-import me.ryanhamshire.GriefPrevention.DataStore;
-import me.ryanhamshire.GriefPrevention.GriefPrevention;
-import org.bukkit.Location;
+import me.ryanhamshire.griefprevention.GriefPrevention;
+import me.ryanhamshire.griefprevention.api.GriefPreventionApi;
+import me.ryanhamshire.griefprevention.api.claim.Claim;
+import org.spongepowered.api.world.Location;
 
-import java.util.Objects;
+import java.util.List;
 import java.util.UUID;
-import java.util.stream.Stream;
 
-import static org.bukkit.plugin.java.JavaPlugin.getPlugin;
 
 /**
  * DataExtension for GriefPrevention.
@@ -52,15 +50,12 @@ import static org.bukkit.plugin.java.JavaPlugin.getPlugin;
         iconName = "map-marker",
         elementOrder = {ElementOrder.TABLE}
 )
-public class GriefPreventionExtension implements DataExtension {
+public class GriefPreventionSpongeExtension implements DataExtension {
 
-    private DataStore dataStore;
+    private GriefPreventionApi api;
 
-    public GriefPreventionExtension() {
-        dataStore = getPlugin(GriefPrevention.class).dataStore;
-        if (dataStore == null) {
-            throw new IllegalStateException();
-        }
+    public GriefPreventionSpongeExtension() {
+        api = GriefPrevention.getApi();
     }
 
     @Override
@@ -70,17 +65,6 @@ public class GriefPreventionExtension implements DataExtension {
         };
     }
 
-    @BooleanProvider(
-            text = "SoftMuted",
-            description = "Are the player's messages muted for others, but shown to them",
-            iconName = "bell-slash",
-            iconColor = Color.DEEP_ORANGE,
-            iconFamily = Family.REGULAR
-    )
-    public boolean isSoftMuted(UUID playerUUID) {
-        return dataStore.isSoftMuted(playerUUID);
-    }
-
     @NumberProvider(
             text = "Claims",
             description = "How many claims the player has",
@@ -88,7 +72,7 @@ public class GriefPreventionExtension implements DataExtension {
             iconColor = Color.BLUE_GREY
     )
     public long claimCount(UUID playerUUID) {
-        return getClaimsOf(playerUUID).count();
+        return getClaimsOf(playerUUID).size();
     }
 
     @NumberProvider(
@@ -99,15 +83,13 @@ public class GriefPreventionExtension implements DataExtension {
             iconFamily = Family.REGULAR
     )
     public long claimedArea(UUID playerUUID) {
-        return getClaimsOf(playerUUID)
+        return getClaimsOf(playerUUID).stream()
                 .mapToLong(Claim::getArea)
                 .sum();
     }
 
-    private Stream<Claim> getClaimsOf(UUID playerUUID) {
-        return dataStore.getClaims().stream()
-                .filter(Objects::nonNull)
-                .filter(claim -> playerUUID.equals(claim.ownerID));
+    private List<Claim> getClaimsOf(UUID playerUUID) {
+        return api.getAllPlayerClaims(playerUUID);
     }
 
     @TableProvider(tableColor = Color.BLUE_GREY)
@@ -117,7 +99,7 @@ public class GriefPreventionExtension implements DataExtension {
                 .columnOne("Claim", Icon.called("map-marker").build())
                 .columnTwo("Area", Icon.called("map").of(Family.REGULAR).build());
 
-        getClaimsOf(playerUUID)
+        getClaimsOf(playerUUID).stream()
                 .sorted((one, two) -> Integer.compare(two.getArea(), one.getArea()))
                 .forEach(
                         claim -> table.addRow(formatLocation(claim.getGreaterBoundaryCorner()), claim.getArea())
