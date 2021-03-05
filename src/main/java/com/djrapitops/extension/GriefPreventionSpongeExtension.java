@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2019 Risto Lahtela (Rsl1122)
+    Copyright(c) 2019 Risto Lahtela (AuroraLS3)
 
     The MIT License(MIT)
 
@@ -42,7 +42,7 @@ import java.util.UUID;
 /**
  * DataExtension for GriefPrevention.
  *
- * @author Rsl1122
+ * @author AuroraLS3
  */
 @PluginInfo(name = "GriefPrevention", iconName = "shield-alt", iconFamily = Family.SOLID, color = Color.BLUE_GREY)
 @TabInfo(
