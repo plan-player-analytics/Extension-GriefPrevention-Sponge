@@ -1,5 +1,5 @@
 /*
-    Copyright(c) 2019 Risto Lahtela (AuroraLS3)
+    Copyright(c) 2019 AuroraLS3
 
     The MIT License(MIT)
 
@@ -20,36 +20,33 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
 */
-package com.djrapitops.extension;
+package net.playeranalytics.extension.griefprevention.sponge;
 
 import com.djrapitops.plan.extension.DataExtension;
-
-import java.util.Optional;
+import com.djrapitops.plan.extension.extractor.ExtensionExtractor;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 /**
- * Factory for DataExtension.
+ * Test for the implementation of the new extension
  *
  * @author AuroraLS3
  */
-public class GriefPreventionSpongeExtensionFactory {
+class ExtensionImplementationTest {
 
-    private boolean isAvailable() {
-        try {
-            Class.forName("me.ryanhamshire.griefprevention.api.GriefPreventionApi");
-            return true;
-        } catch (ClassNotFoundException e) {
-            return false;
-        }
+    private ExtensionExtractor extractor;
+
+    @BeforeEach
+    void prepareExtractor() {
+        DataExtension extension = new GriefPreventionSpongeExtension();
+        extractor = new ExtensionExtractor(extension);
     }
 
-    public Optional<DataExtension> createExtension() {
-        try {
-            if (isAvailable()) {
-                return Optional.of(new GriefPreventionSpongeExtension());
-            }
-        } catch (IllegalStateException noDataStore) {
-            /* Return below. */
-        }
-        return Optional.empty();
+    @Test
+    @DisplayName("API is implemented correctly")
+    void noImplementationErrors() {
+        extractor.validateAnnotations();
     }
+
 }
